@@ -1,0 +1,10 @@
+{
+    "name": "eslint-plugin-svelte-translate-check",
+    "version": "1.0.0",
+    "main": "index.cjs",
+    "license": "MIT",
+    "devDependencies": {
+        "eslint": "^8.47.0",
+        "glob": "^10.3.3"
+    }
+}
