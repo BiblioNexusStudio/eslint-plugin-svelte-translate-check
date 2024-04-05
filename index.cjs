@@ -9,7 +9,7 @@ const localeFiles = glob.sync('src/lib/i18n/locales/*.json').map((file) => ({
 
 const allTranslateCallsFile = './tmp/all-translate-calls.txt';
 
-const maxTimeBetweenCalls = 5 * 1000;
+const maxTimeBetweenCalls = 15 * 1000;
 
 fs.mkdirSync('./tmp', { recursive: true });
 
@@ -47,12 +47,12 @@ const rules = {
         create(context) {
             return {
                 CallExpression(node) {
-                    const now = Date.now();
-                    if (now - getTimestamp() > maxTimeBetweenCalls) {
-                        fs.writeFileSync(allTranslateCallsFile, now + '\n');
-                    }
-
                     if (node.callee.name === '$translate') {
+                        const now = Date.now();
+                        if (now - getTimestamp() > maxTimeBetweenCalls) {
+                            fs.writeFileSync(allTranslateCallsFile, now + '\n');
+                        }
+
                         const key = node.arguments[0].value;
                         fs.appendFileSync(allTranslateCallsFile, key + '\n');
                         localeFiles.forEach(({ path, content }) => {
